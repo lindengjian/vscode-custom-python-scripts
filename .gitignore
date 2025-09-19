@@ -6,11 +6,9 @@ yarn-error.log*
 
 # Build outputs
 out/
-dist/
 
 # VSCode specific
 .vscode-test/
-*.vsix
 
 # macOS
 .DS_Store
