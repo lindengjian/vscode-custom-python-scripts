@@ -320,14 +320,15 @@ if __name__ == "__main__":
      */
     public async addNewScript() {
         const scriptName = await vscode.window.showInputBox({
-            prompt: '请输入脚本名称（不需要.py后缀）',
-            placeHolder: 'my_script',
+            prompt: '请输入脚本名称（不需要.py后缀，支持中文）',
+            placeHolder: 'my_script 或 我的脚本',
             validateInput: (value) => {
                 if (!value || !value.trim()) {
                     return '脚本名称不能为空';
                 }
-                if (!/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(value.trim())) {
-                    return '脚本名称只能包含字母、数字和下划线，且不能以数字开头';
+                // 支持中文、字母、数字、下划线和连字符
+                if (!/^[\u4e00-\u9fa5a-zA-Z_][\u4e00-\u9fa5a-zA-Z0-9_-]*$/.test(value.trim())) {
+                    return '脚本名称只能包含中文、字母、数字、下划线和连字符，且不能以数字开头';
                 }
                 return null;
             }
@@ -351,12 +352,24 @@ if __name__ == "__main__":
             }
         }
 
-        // 创建新脚本模板
-        const template = `#!/usr/bin/env python3
+        // 读取模板文件并替换变量
+        const templatePath = path.join(this.context.extensionPath, 'templates', 'template.py');
+        let template: string;
+        
+        try {
+            template = fs.readFileSync(templatePath, 'utf8');
+            // 替换模板变量
+            template = template
+                .replace(/\{\{SCRIPT_NAME\}\}/g, scriptName)
+                .replace(/\{\{CREATION_TIME\}\}/g, new Date().toLocaleString());
+        } catch (error) {
+            // 如果模板文件不存在，使用默认模板
+            template = `#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 ${scriptName} - 自定义Python脚本
 创建时间: ${new Date().toLocaleString()}
+描述: 在这里添加脚本描述
 """
 
 import sys
@@ -365,7 +378,7 @@ from datetime import datetime
 
 def main():
     """主函数 - 在这里添加你的代码"""
-    print(f"执行脚本: {scriptName}")
+    print(f"执行脚本: ${scriptName}")
     print(f"执行时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"当前目录: {os.getcwd()}")
     
@@ -375,6 +388,7 @@ def main():
 if __name__ == "__main__":
     main()
 `;
+        }
 
         try {
             this.ensureScriptsDirectory();
