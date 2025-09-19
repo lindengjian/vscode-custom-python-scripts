@@ -2,7 +2,7 @@
   "name": "custom-python-scripts",
   "displayName": "自定义Python脚本",
   "description": "在右键菜单中添加自定义Python脚本执行功能",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "lindengjian",
   "author": {
     "name": "lindengjian"
