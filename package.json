@@ -1,0 +1,120 @@
+{
+  "name": "custom-python-scripts",
+  "displayName": "自定义Python脚本",
+  "description": "在右键菜单中添加自定义Python脚本执行功能",
+  "version": "1.0.0",
+  "publisher": "custom-scripts",
+  "author": {
+    "name": "Custom Scripts Developer"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/custom-scripts/vscode-custom-python-scripts"
+  },
+  "keywords": [
+    "python",
+    "scripts",
+    "automation",
+    "custom",
+    "右键菜单"
+  ],
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "customScripts.openScriptsFolder",
+        "title": "📁 打开脚本文件夹",
+        "category": "自定义脚本"
+      },
+      {
+        "command": "customScripts.refreshScripts",
+        "title": "🔄 刷新脚本列表",
+        "category": "自定义脚本"
+      },
+      {
+        "command": "customScripts.addNewScript",
+        "title": "➕ 添加新脚本",
+        "category": "自定义脚本"
+      },
+      {
+        "command": "customScripts.runScript",
+        "title": "🐍 运行Python脚本",
+        "category": "自定义脚本"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "submenu": "customScripts.submenu",
+          "group": "navigation@10"
+        }
+      ],
+      "editor/context": [
+        {
+          "submenu": "customScripts.submenu",
+          "group": "navigation@10"
+        }
+      ],
+      "customScripts.submenu": [
+         {
+           "command": "customScripts.runScript",
+           "group": "scripts@1"
+         },
+         {
+           "command": "customScripts.addNewScript",
+           "group": "management@1"
+         },
+         {
+           "command": "customScripts.openScriptsFolder",
+           "group": "management@2"
+         },
+         {
+           "command": "customScripts.refreshScripts",
+           "group": "management@3"
+         }
+       ]
+    },
+    "submenus": [
+      {
+        "id": "customScripts.submenu",
+        "label": "🐍 自定义脚本"
+      }
+    ],
+    "configuration": {
+      "title": "自定义Python脚本",
+      "properties": {
+        "customScripts.scriptsPath": {
+          "type": "string",
+          "default": "",
+          "description": "自定义脚本存放路径（留空则使用扩展默认路径）"
+        },
+        "customScripts.pythonPath": {
+          "type": "string",
+          "default": "python3",
+          "description": "Python解释器路径"
+        }
+      }
+    }
+  },
+  "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "package": "vsce package"
+    },
+  "devDependencies": {
+    "@types/vscode": "^1.74.0",
+    "@types/node": "16.x",
+    "typescript": "^4.9.4"
+  }
+}
