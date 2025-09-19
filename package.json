@@ -3,14 +3,18 @@
   "displayName": "自定义Python脚本",
   "description": "在右键菜单中添加自定义Python脚本执行功能",
   "version": "1.0.0",
-  "publisher": "custom-scripts",
+  "publisher": "lindengjian",
   "author": {
-    "name": "Custom Scripts Developer"
+    "name": "lindengjian"
   },
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/custom-scripts/vscode-custom-python-scripts"
+    "url": "https://github.com/lindengjian/vscode-custom-python-scripts"
+  },
+  "homepage": "https://github.com/lindengjian/vscode-custom-python-scripts#readme",
+  "bugs": {
+    "url": "https://github.com/lindengjian/vscode-custom-python-scripts/issues"
   },
   "keywords": [
     "python",
@@ -25,6 +29,11 @@
   "categories": [
     "Other"
   ],
+  "icon": "icon.png",
+  "galleryBanner": {
+    "color": "#1e1e1e",
+    "theme": "dark"
+  },
   "activationEvents": [
     "onStartupFinished"
   ],
